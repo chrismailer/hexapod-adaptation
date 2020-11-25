@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CPTemplate>
+  <CPSheet>
+    <MessageBox>Customise Assembly Properties</MessageBox>
+    <GroupBox Label="Please enter Student Details" PropName="Groupbox4" DefaultState="Expanded">
+      <Control Label="Student Name" PropName="Student Name" ApplyTo="Global" Type="TextBox" DefaultValue="" Mode="Text" />
+      <Control Label="Student Number" PropName="Student Number" ApplyTo="Global" Type="TextBox" DefaultValue="" Mode="Text" />
+    </GroupBox>
+    <GroupBox Label="Assembly Properties" PropName="Groupbox5" DefaultState="Expanded">
+      <Control Label="Assembly Mass [g]" PropName="Mass [g]" ApplyTo="Global" Type="TextBox" DefaultValue="SW-Mass" Mode="SWProperty" />
+    </GroupBox>
+  </CPSheet>
+</CPTemplate>

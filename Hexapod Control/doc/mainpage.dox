@@ -1,0 +1,19 @@
+/*!
+  \mainpage "Hexapod" Masters Project
+Robotics and Agents Research Lab, University of Cape Town
+
+Walking robots are useful in search and rescue applications due to their ability to navigate uneven and complex terrain compared to wheeled robots. 
+
+A hexapod robot has been developed by the Robotics and Agents Research Lab at UCT, however multiple inadequacies have become evident. This work aims to produce a mathematical model of the hexapod and using this model, implement a control algorithm to achieve a smooth walking motion and overcome the original flaws.
+
+The mathematical model was integrated with the mechanical structure of the hexapod and controlled by a micro-controller. This micro-controller allows for a rapid start-up and low power consumption when compared to previous iterations. Using a path generation algorithm, sets of positions and velocities are generated. Generating these points in real time allows for walking in any direction without any pre-defined foot positions. 
+
+To enable attitude control of the hexapod body, an inertial measurement unit (IMU) was added to the hexapod. By using a PID controller the IMU pitch and roll data was used to control a height offset of each foot of the hexapod, allowing for dynamic stabilization of the hexapod body.
+
+An improved wireless remote control was developed to facilitate communication with a host computer. The remote system has a graphical user interface allowing for walking control and status information feedback, such as error information and current battery voltage.
+
+Walking tests have shown that the hexapod walks successfully with a smooth tripod gait using the path generation algorithm. Stabilization tests have shown that the hexapod is capable of stabilizing itself after a disturbance to its pitch and/or roll in $\pm 2.5$ seconds with a steady state error of $\pm 0.001$ radians.
+
+This proves that the hexapod robot can be controlled wirelessly while walking in any direction with a stabilized body. This is beneficial in search and rescue as the hexapod has a high degree of manoeuvrability to access areas too dangerous for rescuers to access. With cameras mounted on the stabilized body, it can be used to locate survivors in a disaster area and assist rescuers in recovering them with speed.
+
+*/

@@ -1,0 +1,9 @@
+# adapted trials with 2 failed legs separated by 1
+# rows: failure
+# columns: map
+4 3 2 12 16 7 7 3 9 13
+3 11 4 5 7 2 1 8 18 8
+11 4 18 2 4 5 8 19 5 3
+9 2 4 12 9 8 9 15 4 1
+23 15 4 7 11 1 5 3 5 7
+11 10 12 19 4 12 12 19 10 14

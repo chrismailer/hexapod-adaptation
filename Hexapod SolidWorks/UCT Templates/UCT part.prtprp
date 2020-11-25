@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CPTemplate>
+  <CPSheet>
+    <MessageBox>Customise Part Properties</MessageBox>
+    <GroupBox Label="Please enter Student Details" PropName="Groupbox4" DefaultState="Expanded">
+      <Control Label="Student Name" PropName="Student Name" ApplyTo="Global" Type="TextBox" DefaultValue="" Mode="Text" />
+      <Control Label="Student Number" PropName="Student Number" ApplyTo="Global" Type="TextBox" DefaultValue="" Mode="Text" />
+    </GroupBox>
+    <GroupBox Label="Part Properties" PropName="Groupbox5" DefaultState="Expanded">
+      <Control Label="Material" PropName="Material" ApplyTo="Global" Type="TextBox" DefaultValue="SW-Material" Mode="SWProperty" />
+      <Control Label="Mass [g]" PropName="Mass" ApplyTo="Global" Type="TextBox" DefaultValue="SW-Mass" Mode="SWProperty" />
+      <Control Label="Finish" PropName="Finish" ApplyTo="Global" Type="ComboBox" UserDefineable="False">
+        <Data Path="" SourceType="List">
+          <Item>Fine</Item>
+          <Item>Medium</Item>
+          <Item>Coarse</Item>
+        </Data>
+      </Control>
+    </GroupBox>
+  </CPSheet>
+</CPTemplate>
