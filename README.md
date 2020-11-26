@@ -4,9 +4,9 @@ This project enables gait adaptation of the University of Cape Town's Robotic Ag
 
 `Code` contains the hexapod simulation, MAP-Elites, M-BOA, generated maps, and results\
 `Hexapod Control` contains the modified onboard C++ control code for the robotic platform\
-`Hexapod SolidWorks` contains the updated SolidWorks files for the hexapod platform with the required coordinate frames\
+`Hexapod SolidWorks` contains the updated SolidWorks files for the hexapod platform with the required coordinate frames
 
-Videos for the project can be found [here](https://drive.google.com/drive/folders/18nBqK6PnA0IYt2r0Ebi3O82trxsxnqot?usp=sharing)
+Videos of the project can be found [here](https://drive.google.com/drive/folders/18nBqK6PnA0IYt2r0Ebi3O82trxsxnqot?usp=sharing)
 
 # Dependencies
 - numpy
