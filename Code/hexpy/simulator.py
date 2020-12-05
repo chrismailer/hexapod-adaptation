@@ -5,9 +5,6 @@ import numpy as np
 import time
 import os
 
-from PIL import Image
-from subprocess import Popen, PIPE
-
 
 class Simulator:
 	"""This class is a wrapper for simulating the RARL Hexapod with the PyBullet physics engine
@@ -19,7 +16,7 @@ class Simulator:
     Attributes
     ----------    	
     urdf : str
-    	Filename of URDF model of hexapod. 
+    	Filename of URDF model of hexapod relative to simulator. 
     controller : :obj:'Controller'
     	Positional controller object responsible for providing joint angles and velocities at given time
     visualiser_enabled : bool
@@ -32,10 +29,11 @@ class Simulator:
     	A list of joint numbers which should simulated as unpowered.
 
     """
-	def __init__(self, controller, urdf='./urdf/hexapod.urdf', visualiser=False, follow=True, collision_fatal=True, failed_legs=[], camera_position=[0, 0, 0], camera_distance=0.7, camera_yaw=20, camera_pitch=-30):
+	def __init__(self, controller, urdf='/urdf/hexapod.urdf', visualiser=False, follow=True, collision_fatal=True, failed_legs=[], camera_position=[0, 0, 0], camera_distance=0.7, camera_yaw=20, camera_pitch=-30):
 		self.t = 0 #: float: Current time of the simulator
 		self.dt = 1/240  #: float: Timestep of simulator. Default is 1/240s for PyBullet.
 		self.gravity = -9.81 #: float: Magnitude of gravity vector in the positive z direction
+		self.foot_friction = 0.7
 		self.controller = controller
 		self.visualiser_enabled = visualiser
 		self.follow = follow
@@ -80,18 +78,16 @@ class Simulator:
 
 		# Add ground plane and set lateral friction coefficient
 		self.groundId = self.client.loadURDF("plane.urdf") #: int: Body ID of ground
-		self.client.changeDynamics(self.groundId, -1, lateralFriction=0.5)
-
+		self.client.changeDynamics(self.groundId, -1, lateralFriction=self.foot_friction)
 		# Add hexapod URDF
 		position = [0, 0, self.controller.body_height]
 		orientation = self.client.getQuaternionFromEuler([0, 0, -controller.crab_angle])
-		# filepath = os.path.abspath(os.path.dirname(__file__)) + urdf
-		flags = p.URDF_USE_INERTIA_FROM_FILE | p.URDF_USE_SELF_COLLISION
-		self.hexId = self.client.loadURDF(urdf, position, orientation, flags=flags) #: int: Body ID of hexapod robot
-
+		filepath = os.path.abspath(os.path.dirname(__file__)) + urdf
+		self.hexId = self.client.loadURDF(filepath, position, orientation, flags=p.URDF_USE_INERTIA_FROM_FILE | p.URDF_USE_SELF_COLLISION) #: int: Body ID of hexapod robot
+		# get joint and link info from model
 		self.joints = self.__get_joints(self.hexId) #: list of int: List of joint indeces
 		self.links = self.__get_links(self.joints) #: list of int: List of link indeces
-
+		# initialise joints and links
 		self.__init_joints(self.controller, self.joints, self.locked_joints)
 		self.__init_links(self.links)
 
@@ -107,7 +103,6 @@ class Simulator:
 			joint_index, lower_limit, upper_limit, max_torque, max_speed = joint
 			# not guaranteed that joint is present
 			if joint_index is None: continue
-
 			# if joint is locked, set it to fixed angle
 			if index in locked_joints:
 				joint_speed = 0
@@ -117,12 +112,9 @@ class Simulator:
 					joint_angle = np.radians(90)
 				elif joint_index in joints[2::3]: # tibia
 					joint_angle = np.radians(-150)
-
 			# set joints to their starting position
 			self.client.resetJointState(self.hexId, joint_index, targetValue=joint_angle)
-			
 			if index in locked_joints: continue
-
 			# ensure actuator behaves as unpowered servo
 			# assign small friction force to joint to simulate servo friction
 			self.client.setJointMotorControl2(self.hexId, joint_index, p.VELOCITY_CONTROL, force=0.1)
@@ -132,8 +124,7 @@ class Simulator:
 		tibia_links = links[:, 2]
 		for link_index in tibia_links:
 			# assign friction to feet to ensure they are not dragged
-			self.client.changeDynamics(self.hexId, link_index, lateralFriction=0.5)
-
+			self.client.changeDynamics(self.hexId, link_index, lateralFriction=self.foot_friction)
 		# remove collisions between femur and base as this was preventing full coxa range of motion
 		femur_links = links[:, 1]
 		for link_index in femur_links:
@@ -187,6 +178,7 @@ class Simulator:
         This will request the joint angles and speeds from the assigned controller
 
         """
+		start_time = time.perf_counter()
 		# using setJointMotorControl2 (slightly slower but allows setting of max velocity)
 		joint_angles = self.controller.joint_angles(t=self.t)
 		joint_speeds = self.controller.joint_speeds(t=self.t)
@@ -213,9 +205,12 @@ class Simulator:
 			if self.__link_collision() or self.__ground_collision():
 				raise RuntimeError("Link collision during simulation")
 
+		end_time = time.perf_counter()
 		# follow robot with camera
-		if self.visualiser_enabled and self.follow:
-			self.client.resetDebugVisualizerCamera(cameraDistance=self.camera_distance, cameraYaw=self.camera_yaw, cameraPitch=self.camera_pitch, cameraTargetPosition=self.base_pos())
+		if self.visualiser_enabled:
+			if self.follow:
+				self.client.resetDebugVisualizerCamera(cameraDistance=self.camera_distance, cameraYaw=self.camera_yaw, cameraPitch=self.camera_pitch, cameraTargetPosition=self.base_pos())
+			time.sleep(max(self.dt - end_time + start_time, 0))
 
 		# if ((round(self.t / self.dt) % 10) == 0):
 		# 	width = int(1920*1)
@@ -298,6 +293,7 @@ class Simulator:
 
         """
 		return self.client.getBasePositionAndOrientation(self.hexId)[0]
+
 
 if __name__ == "__main__":
 	from controllers.kinematic import Controller
