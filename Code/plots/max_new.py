@@ -23,8 +23,9 @@ for n in range(1,11):
 	max_fitness[:,n-1] = log[:,2] / 5
 	mean_fitness[:,n-1] = log[:,3] / 5
 	# np.append(max_fitness, max_fit, axis=1)
+max_fitness[max_fitness == 0] = np.nan
 
-fit_mean = np.mean(max_fitness, axis=1)
+fit_mean = np.nanmean(max_fitness, axis=1)
 fit_max = np.max(max_fitness, axis=1)
 minim = np.min(max_fitness, axis=1)
 # maxim = np.percentile(max_fitness, 75, axis=1)
@@ -48,6 +49,6 @@ plt.legend(loc='lower right')
 
 fig.tight_layout()
 
-plt.savefig('../../Final Report/figures/map_fitness_progression.pdf')
+# plt.savefig('../../Final Report/figures/map_fitness_progression.pdf')
 
-# plt.show()
+plt.show()

@@ -32,7 +32,7 @@ class Simulator:
     	A list of joint numbers which should simulated as unpowered.
 
     """
-	def __init__(self, controller, urdf='./urdf/hexapod.urdf', visualiser=False, follow=True, collision_fatal=True, failed_legs=[]):
+	def __init__(self, controller, urdf='./urdf/hexapod.urdf', visualiser=False, follow=True, collision_fatal=True, failed_legs=[], camera_position=[0, 0, 0], camera_distance=0.7, camera_yaw=20, camera_pitch=-30):
 		self.t = 0 #: float: Current time of the simulator
 		self.dt = 1/240  #: float: Timestep of simulator. Default is 1/240s for PyBullet.
 		self.gravity = -9.81 #: float: Magnitude of gravity vector in the positive z direction
@@ -52,10 +52,10 @@ class Simulator:
 		self.camera_yaw = 0 #: float: GUI camera yaw in degrees (-20)
 		self.camera_pitch = -45 #: float: GUI camera pitch in degrees (-30)
 
-		self.camera_position = [0, 0, 0]
-		self.camera_distance = 0.5
-		self.camera_yaw = -90
-		self.camera_pitch = -55
+		self.camera_position = camera_position
+		self.camera_distance = camera_distance
+		self.camera_yaw = camera_yaw
+		self.camera_pitch = camera_pitch
 		
 		# connect a client to a pybullet physics server
 		if self.visualiser_enabled:

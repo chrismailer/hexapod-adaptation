@@ -56,7 +56,7 @@ def plot_map(data, map_num):
 
 	fig.tight_layout()
 
-	# plt.savefig('histogram.pgf')
+	# plt.savefig('/Users/chrismailer/Desktop/map.pdf')
 
 	plt.show()
 

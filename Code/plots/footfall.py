@@ -42,9 +42,9 @@ def plot_footfall(sequences, dt=1/240):
 
 	fig.tight_layout()
 
-	plt.savefig('../Final Report/figures/tripod_sim_footfall.pdf')
+	# plt.savefig('../Final Report/figures/tripod_sim_footfall.pdf')
 
-	# plt.show()
+	plt.show()
 
 
 if __name__ == "__main__":

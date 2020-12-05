@@ -16,7 +16,7 @@ fig.set_size_inches(w=4.7747, h=3.5)
 axins = ax.inset_axes([0.4, 0.2, 0.2, 0.4])
 
 for num in range(1,11):
-	log = np.loadtxt('../experiments/log_%d.dat' % num)
+	log = np.loadtxt('../maps/log_%d.dat' % num)
 	n_evals = log[:,0] / 1e6
 	mean_fitness = log[:,3]/5
 	ax.plot(n_evals, mean_fitness, label='Map %d' % num)

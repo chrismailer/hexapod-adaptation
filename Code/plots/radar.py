@@ -114,25 +114,24 @@ if __name__ == '__main__':
     fig, ax = plt.subplots(subplot_kw=dict(projection='radar'))
     fig.set_size_inches(w=4.7747, h=3.5)
     ax.set_rgrids([0.2, 0.4, 0.6, 0.8])
-    ax.set_rgrids([])
 
     ax.plot(theta, desc1)
     ax.fill(theta, desc1, alpha=0.25)
 
-    # ax.plot(theta, desc2)
-    # ax.fill(theta, desc2, alpha=0.25)
+    ax.plot(theta, desc2)
+    ax.fill(theta, desc2, alpha=0.25)
 
     # plot failed legs
-    # ax.plot(theta, [1.0, 0, 0, 0, 0, 0], color='r')
+    ax.plot(theta, [1.0, 0, 0, 0, 0, 0], color='r')
 
     ax.set_varlabels(spoke_labels)
 
-    # ax.set_title('Gait Descriptor Experiment 3')
+    ax.set_title('Experiment 3')
 
     plt.ylim((0, 1.0))
 
     labels = ('Initial', 'Adapted', 'Failed Leg')
-    # legend = ax.legend(labels, loc=(0.9, .95), labelspacing=0.1, fontsize='small')
+    legend = ax.legend(labels, loc=(0.9, .95), labelspacing=0.1, fontsize='small')
 
     fig.tight_layout()
 
