@@ -32,7 +32,7 @@ if __name__ == '__main__':
     params = \
         {
             # more of this -> higher-quality CVT (400000)
-            "cvt_samples": 1e7,
+            "cvt_samples": 10000000,
             # we evaluate in batches to parallelise
             "batch_size": 2390,
             # proportion of niches to be filled before starting (400)
