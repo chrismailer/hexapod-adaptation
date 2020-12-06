@@ -166,7 +166,7 @@ def variation(x, z, params):
     return y
 
 def __centroids_filename(k, dim):
-    return 'centroids_' + str(k) + '_' + str(dim) + '.dat'
+    return 'centroids/centroids_' + str(k) + '_' + str(dim) + '.dat'
 
 
 def __write_centroids(centroids):
