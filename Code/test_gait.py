@@ -1,6 +1,6 @@
-from hexpy.controllers.kinematic import Controller, reshape
+from hexapod.controllers.kinematic import Controller, reshape
+from hexapod.simulator import Simulator
 from plots.footfall import plot_footfall
-from hexpy.simulator import Simulator
 import numpy as np
 
 # np.set_printoptions(precision=4)
@@ -39,9 +39,7 @@ def test_gait(leg_params, body_height=0.14, velocity=0.3, duration=5.0, visualis
 # place to test out gaits
 
 if __name__ == "__main__":
-	from hexpy.controllers.kinematic import tripod_gait
-	from hexpy.controllers.kinematic import quadruped_gait
-	from hexpy.controllers.kinematic import wave_gait
+	from hexapod.controllers.kinematic import tripod_gait, quadruped_gait, wave_gait
 
 	log = np.loadtxt('./maps/map_6.dat')
 	row_index = np.argmax(log, axis=0)[0]
@@ -57,7 +55,7 @@ if __name__ == "__main__":
 	# print(params)
 
 	for failed_legs in [[]]:
-		fitness, descriptor = test_gait(leg_params, body_height=body_height, velocity=velocity, duration=5.0, collisions=False, visualiser=True, failed_legs=[])
+		fitness, descriptor = test_gait(quadruped_gait, body_height=0.14, velocity=0.2, duration=5.0, collisions=False, visualiser=True, failed_legs=[])
 		print('fitness:', fitness, 'm')
 		print('descriptor:', descriptor)
 	# plot(descriptor)

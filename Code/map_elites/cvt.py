@@ -89,8 +89,7 @@ def compute(dim_map, dim_x, f,
     pool = MPIPoolExecutor()
 
     # create the CVT
-    c = cm.cvt(n_niches, dim_map,
-              params['cvt_samples'], params['cvt_use_cache'])
+    c = cm.cvt(n_niches, dim_map, params['cvt_samples'], params['cvt_use_cache'])
     kdt = KDTree(c, leaf_size=30, metric='euclidean')
     cm.__write_centroids(c)
 
