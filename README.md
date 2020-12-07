@@ -5,6 +5,7 @@ This project enables gait adaptation of the University of Cape Town's [Robotic A
 <p align="center">
   <img src="cover_image.png" width="300"/>
 </p>
+<p style="text-align: center;"> *Hexapod platform on a generated behaviour-performance map (Image by Alexandra Mailer)* </p>
 
 *Hexapod platform on a generated behaviour-performance map (Image by Alexandra Mailer)*
 
