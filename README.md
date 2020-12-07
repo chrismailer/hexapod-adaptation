@@ -6,6 +6,7 @@ This project enables gait adaptation of the University of Cape Town's [Robotic A
 
 <p align="center">
   <img src="cover_image.png" width="300"/>
+  <p>Image of the hexapod robot and behaviour-performance map by Alexandra Mailer</p>
 </p>
 
 `Code` contains the hexapod simulation, MAP-Elites, M-BOA, generated maps, and results\
