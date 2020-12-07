@@ -1,5 +1,5 @@
 from hexapod.controllers.kinematic import Controller, reshape
-from hexapod.simulator import Simulator as HexSim
+from hexapod.simulator import Simulator
 import map_elites.cvt as cvt_map_elites
 import numpy as np
 
@@ -12,7 +12,7 @@ def evaluate_gait(x, duration=5):
         controller = Controller(leg_params, body_height=body_height, velocity=velocity, period=1.0, crab_angle=-np.pi/6)
     except:
         return -1, np.zeros(6)
-    simulator = HexSim(controller=controller, visualiser=False, collision_fatal=True)
+    simulator = Simulator(controller=controller, visualiser=False, collision_fatal=True)
     contact_sequence = np.full((6, 0), False)
     for t in np.arange(0, duration, step=simulator.dt):
         try:
