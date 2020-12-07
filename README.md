@@ -4,7 +4,9 @@ This project enables gait adaptation of the University of Cape Town's [Robotic A
 
 ![Cover Image](cover_image.png =100x)
 
-<img src="cover_image.png" width="300" class="center"/>
+<p align="center">
+  <img src="cover_image.png" width="300"/>
+</p>
 
 `Code` contains the hexapod simulation, MAP-Elites, M-BOA, generated maps, and results\
 `Hexapod Control` contains the modified onboard C++ control code for the robotic platform\
