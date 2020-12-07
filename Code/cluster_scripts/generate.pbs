@@ -3,8 +3,8 @@
 #PBS -P CSCI1142
 #PBS -q normal
 #PBS -l walltime=48:00:00
-#PBS -o /mnt/lustre/users/cmailer/experiment_{EXP}/experiment_{EXP}.out
-#PBS -e /mnt/lustre/users/cmailer/experiment_{EXP}/experiment_{EXP}.err
+#PBS -o /mnt/lustre/users/cmailer/map_{EXP}/map_{EXP}.out
+#PBS -e /mnt/lustre/users/cmailer/map_{EXP}/map_{EXP}.err
 #PBS -m abe
 #PBS -M mlrchr001@myuct.ac.za
 #PBS -N MAP_Elites_{EXP}
@@ -14,6 +14,6 @@
 module purge
 module load chpc/python/3.7.0
 
-cd /mnt/lustre/users/cmailer/experiment_{EXP}/
+cd /mnt/lustre/users/cmailer/map_{EXP}/
 nproc=`cat $PBS_NODEFILE | wc -l`
 mpirun -np $nproc python3 -m mpi4py.futures generate_map.py
