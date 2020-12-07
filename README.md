@@ -2,14 +2,10 @@
 
 This project enables gait adaptation of the University of Cape Town's [Robotic Agents Research Lab](http://www.rarl.uct.ac.za) Hexapod platform using the Intelligent Trial & Error (IT&E) algorithm by [Cully et al. 2015](https://doi.org/10.1038/nature14422) as part of my final year undergraduate project. This project was supervised by Ms Leanne Raw and co-supervised by Dr Geoff Nitschke.
 
-![Cover Image](cover_image.png =100x)
-
 <p align="center">
-  <figure>
-    <img src="cover_image.png" width="300"/>
-    <figcaption> Image of the hexapod robot and behaviour-performance map by Alexandra Mailer </figcaption>
-  </figure>
+  <img src="cover_image.png" width="300"/>
 </p>
+Image of the hexapod platform on a generated behaviour-performance map by Alexandra Mailer
 
 `Code` contains the hexapod simulation, MAP-Elites, M-BOA, generated maps, and results\
 `Hexapod Control` contains the modified onboard C++ control code for the robotic platform\
