@@ -5,11 +5,11 @@ This project enables gait adaptation of the University of Cape Town's [Robotic A
 <p align="center">
   <img src="cover_image.png" width="300"/>
 </p>
-Hexapod platform on a generated behaviour-performance map (Image by Alexandra Mailer)\
+*Hexapod platform on a generated behaviour-performance map (Image by Alexandra Mailer)*\
 
 `Code` contains the hexapod simulation, MAP-Elites, M-BOA, generated maps, and results\
 `Hexapod Control` contains the modified onboard C++ control code for the robotic platform\
-`Hexapod SolidWorks` contains the updated SolidWorks files for the hexapod platform
+`Hexapod SolidWorks` contains the updated SolidWorks files for the hexapod platform\
 
 Videos of the project can be found [here](https://drive.google.com/drive/folders/18nBqK6PnA0IYt2r0Ebi3O82trxsxnqot?usp=sharing)
 
