@@ -17,14 +17,12 @@ tripod_gait = [	0.15, 0, 0.06, 0.5, 0.5, # leg 0
 				0.15, 0, 0.06, 0.5, 0.5, # leg 4
 				0.15, 0, 0.06, 0.0, 0.5] # leg 5
 
-
 wave_gait = [	0.15, 0, 0.06, 0/6, 5/6, # leg 0
 				0.15, 0, 0.06, 1/6, 5/6, # leg 1
 				0.15, 0, 0.06, 2/6, 5/6, # leg 2
 				0.15, 0, 0.06, 3/6, 5/6, # leg 3
 				0.15, 0, 0.06, 4/6, 5/6, # leg 4
 				0.15, 0, 0.06, 5/6, 5/6] # leg 5
-
 
 quadruped_gait = [	0.15, 0, 0.06, 0/3, 2/3, # leg 0
 					0.15, 0, 0.06, 1/3, 2/3, # leg 1
@@ -232,16 +230,17 @@ class Controller:
 
 
 # reshapes a 32 length array of floats range 0.0 - 1.0 into the range expected by the controller
-def reshape(params):
-	params = np.array(params)
+def reshape(x):
+	x = np.array(x)
 	# get body height and velocity
-	height = params[0] * 0.2
-	velocity = params[1] * 0.5
-	# scale and shifted params into the ranges expected by controller
+	height = x[0] * 0.2
+	velocity = x[1] * 0.5
+	leg_params = x[2:].reshape((6,5))
 	# radius, offset, step_height, phase, duty_cycle
-	leg_params = params[2:].reshape((6,5))
-	leg_params = leg_params * [0.3, 2*1.745, 0.2, 1.0, 1.0]
-	leg_params = leg_params + [0.0, -1.745, 0.0, 0.0, 0.0]
+	param_min = np.array([0.0, -1.745, 0.01, 0.0, 0.0])
+	param_max = np.array([0.3, 1.745, 0.2, 1.0, 1.0])
+	# scale and shifted params into the ranges expected by controller
+	leg_params = leg_params * (param_max - param_min) + param_min
 
 	return height, velocity, leg_params
 
