@@ -37,7 +37,7 @@ def plot_map(data, map_num):
 	plt.scatter((y/124)*100, (x/124)*100, color='red', s=4, marker='s')
 
 	# plt.imshow(A, interpolation='none', origin='lower', vmin=0, vmax=0.5, extent=(0, 100, 0, 100))
-	plt.imshow(A, interpolation='none', origin='lower', extent=(0, 100, 0, 100), cmap='inferno', vmin=0, vmax=0.5)
+	plt.imshow(A, interpolation='none', origin='lower', extent=(0, 100, 0, 100), cmap='inferno', vmin=0, vmax=0.6)
 	clb = plt.colorbar()
 	clb.ax.set_ylabel('Fitness ($m/s$)')
 
@@ -63,6 +63,6 @@ def plot_map(data, map_num):
 
 if __name__ == "__main__":
 	map_num = 1
-	data = np.loadtxt('../maps/map_%d.dat' % map_num)
+	data = np.loadtxt('../maps/niches_20000/map_%d.dat' % map_num)
 	# data = np.loadtxt('../real_experiments/adapted_map_3.dat')
 	plot_map(data, map_num)
