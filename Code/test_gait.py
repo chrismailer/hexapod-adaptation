@@ -41,21 +41,24 @@ def test_gait(leg_params, body_height=0.14, velocity=0.3, duration=5.0, visualis
 if __name__ == "__main__":
 	from hexapod.controllers.kinematic import tripod_gait, quadruped_gait, wave_gait
 
-	log = np.loadtxt('./maps/map_6.dat')
-	row_index = np.argmax(log, axis=0)[0]
-	# row_index = np.random.randint(0, log.shape[0])
+	gait_map = np.loadtxt('./maps/niches_20000/map_1.dat')
+	row_index = np.argmax(gait_map, axis=0)[0]
+	gait_map = gait_map[gait_map[:,0] > 2.0]
+	row_index = np.random.randint(0, gait_map.shape[0])
 	# row_index = 19079
 
-	fitness = log[row_index, 0]
-	desc = log[row_index, 1:7]
-	centroid = log[row_index, 7:13]
-	params = log[row_index, 13:]
+	fitness = gait_map[row_index, 0]
+	desc = gait_map[row_index, 1:7]
+	centroid = gait_map[row_index, 7:13]
+	params = gait_map[row_index, 13:]
 	body_height, velocity, leg_params = reshape(params)
+
+	print(leg_params)
 
 	# print(params)
 
 	for failed_legs in [[]]:
-		fitness, descriptor = test_gait(quadruped_gait, body_height=0.14, velocity=0.2, duration=5.0, collisions=False, visualiser=True, failed_legs=[])
+		fitness, descriptor = test_gait(leg_params, body_height=body_height, velocity=velocity, duration=5.0, collisions=False, visualiser=True, failed_legs=[])
 		print('fitness:', fitness, 'm')
 		print('descriptor:', descriptor)
 	# plot(descriptor)
