@@ -1,19 +1,20 @@
 #!/bin/bash
+
 #PBS -l select=10:ncpus=24:mpiprocs=24:nodetype=haswell_reg
 #PBS -P CSCI1142
 #PBS -q normal
 #PBS -l walltime=48:00:00
-#PBS -o /mnt/lustre/users/cmailer/map_1/map_1.out
-#PBS -e /mnt/lustre/users/cmailer/map_1/map_1.err
+#PBS -o job.out
+#PBS -e job.err
 #PBS -m abe
 #PBS -M mlrchr001@myuct.ac.za
-#PBS -N 20000_1
+#PBS -N 20000_3
 
-# ulimit -s unlimited
+ulimit -s unlimited
 
 module purge
 module load chpc/python/3.7.0
 
-cd /mnt/lustre/users/cmailer/map_1/
+cd $PBS_O_WORKDIR
 nproc=`cat $PBS_NODEFILE | wc -l`
 mpirun -np $nproc python3 -m mpi4py.futures generate_map.py
