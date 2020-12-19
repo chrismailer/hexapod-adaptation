@@ -29,7 +29,7 @@ mean_fitness_20k = np.empty((16737,1))
 max_fitness_20k = np.empty((16737,1))
 n_evals_20k = []
 
-log_20k = np.loadtxt('./niches_20000/log_1.dat')
+log_20k = np.loadtxt('./niches_20000/log_2.dat')
 n_evals_20k = log_20k[:,0] / 1e6
 max_fitness_20k[:,0] = log_20k[:,2] / 5
 mean_fitness_20k[:,0] = log_20k[:,3] / 5
