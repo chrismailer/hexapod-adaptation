@@ -1,9 +1,8 @@
-from hexpy.controllers.kinematic import Controller, reshape
-from hexpy.simulator import Simulator
+from hexapod.controllers.kinematic import Controller, reshape
+from hexapod.simulator import Simulator
 from copy import copy
 import numpy as np
 import GPy as GPy
-import time
 
 
 # load the CVT voronoi centroids from input archive
@@ -20,7 +19,7 @@ def load_map(filename, dim=6, dim_ctrl=32):
 	x = data[:, 2*dim+1:]
 	return fit, desc, x
 
-# aquisition function for the bayesian optimization
+# upper confidence bound aquisition function for the bayesian optimization
 def UCB(mu_map, kappa, sigma_map):
 	GP = []
 	for i in range(0, len(mu_map)):
@@ -71,9 +70,7 @@ def MBOA(map_filename, centroids_filename, eval, max_iter):
 			index_to_test = np.argmax(n_fits)
 			started = True
 			real_perfs = []
-
-		print("Testing index:", index_to_test)
-		print("Expected performance:", n_fits_real[index_to_test])
+		print("Expected perf:", n_fits_real[index_to_test])
 		#if the behavior to test has already been tested, don't test it again
 		if(index_to_test in tested_indexes):
 			print("Behaviour already tested")
@@ -84,6 +81,7 @@ def MBOA(map_filename, centroids_filename, eval, max_iter):
 			
 			# eval the performance
 			real_perf, _ = eval(ctrl_to_test)
+			print("Real perf:", real_perf)
 		
 		num_it += 1
 
@@ -107,62 +105,45 @@ def MBOA(map_filename, centroids_filename, eval, max_iter):
 
 
 if __name__ == "__main__":
+	n_maps = 5
+	num_its = np.array((0,n_maps))
+	best_indexes = np.array((0,n_maps))
+	best_perfs = np.array((0,n_maps))
 
-	for i in range(3,7):
-		
-		num_its = []
-		best_indexes = []
-		best_perfs = []
+	for failure_index, failed_legs in enumerate([[1],[2],[3],[4],[5],[6]]):
+		print("Testing legs", failed_legs)
+		for map_num in range(1,n_maps+1):
 
-		failed_leg_1 = i
-		failed_leg_2 = (i % 6) + 1
-
-		print("Testing legs", failed_leg_1, "and", failed_leg_2)
-
-		for map_num in range(1,11):
 			# need to redefine the evaluate function each time to include the failed leg
-			def evaluate(x, duration=5.0, visualiser=False, summarise_descriptor=True, collisions=False):
+			def evaluate_gait(x, duration=5.0):
 				body_height, velocity, leg_params = reshape(x)
-				# controller will return an error if parameters are not feasible
 				try:
 					controller = Controller(leg_params, body_height=body_height, velocity=velocity, crab_angle=-np.pi/6)
 				except:
 					return 0, np.zeros(6)
-				# initialise simulator
-				locked_joints = list(range((failed_leg_1-1)*3,failed_leg_1*3)) + list(range((failed_leg_2-1)*3,failed_leg_2*3))
-				simulator = Simulator('/urdf/hex.urdf', controller, visualiser, collisions, locked_joints=locked_joints)
-				# initialise fitness and descriptor
-				fitness, descriptor = 0, np.full((6, 0), False)
-				# simulator returns error if collision occurs
+				simulator = Simulator(controller, visualiser=False, collision_fatal=False, failed_legs=failed_legs)
+				fitness, contacts = 0, np.full((6, 0), False)
 				for t in np.arange(0, duration, step=simulator.dt):
-					start_time = time.perf_counter()
 					try:
 						simulator.step()
 					except RuntimeError as error:
 						fitness = 0
 						break
 					fitness = simulator.base_pos()[0]
-					descriptor = np.append(descriptor, simulator.supporting_legs().reshape(-1,1), axis=1)
-
-					end_time = time.perf_counter()
-					elapsed_time = end_time - start_time
-
-					if visualiser:
-						time.sleep(max(1/240-elapsed_time, 0))
+					contacts = np.append(contacts, simulator.supporting_legs().reshape(-1,1), axis=1)
 				# summarise descriptor
-				if summarise_descriptor:
-					descriptor = np.sum(descriptor, axis=1) / np.size(descriptor, axis=1)
-					descriptor = np.nan_to_num(descriptor, nan=0.0, posinf=0.0, neginf=0.0)
+				descriptor = np.sum(contacts, axis=1) / np.size(contacts, axis=1)
+				descriptor = np.nan_to_num(descriptor, nan=0.0, posinf=0.0, neginf=0.0)
 				simulator.terminate()
-
 				return fitness, descriptor
 
+			num_it, best_index, best_perf, new_map = MBOA("./maps/niches_20000/map_%d.dat" % map_num, "./centroids/centroids_40000_6.dat", evaluate_gait, max_iter=40)
+			
+			num_its = np.vstack((num_its, num_it))
+			best_indexes[failure_index,:].append(best_index)
+			best_perfs[failure_index,:].append(best_perf)
 
-			num_it, best_index, best_perf, new_map = MBOA("./experiments/map_%d.dat" % map_num, "./centroids_40000_6.dat", evaluate, max_iter=40)
-			num_its.append(num_it)
-			best_indexes.append(best_index)
-			best_perfs.append(best_perf)
 
 		# print('Failed Leg: %d' % failed_leg_1)
-		print(*best_perfs, sep=' ')
+		print(num_its)
 
