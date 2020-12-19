@@ -1,6 +1,6 @@
 # Implementation of IT&E on the RARL Hexapod
 
-This project enables gait adaptation of the University of Cape Town's [Robotic Agents Research Lab](http://www.rarl.uct.ac.za) Hexapod platform using the [Intelligent Trial & Error (IT&E) algorithm](https://doi.org/10.1038/nature14422) as part of my final year undergraduate project. This project was supervised by Ms Leanne Raw and co-supervised by Dr Geoff Nitschke.
+This project enables gait adaptation to failre on the University of Cape Town's [Robotic Agents Research Lab](http://www.rarl.uct.ac.za) Hexapod robot using the [Intelligent Trial & Error (IT&E) algorithm](https://doi.org/10.1038/nature14422) as part of my final year undergraduate project. This project was supervised by Ms Leanne Raw and co-supervised by Dr Geoff Nitschke.
 
 <p align="center">
   <img src="cover_image.png" width="400"/>
