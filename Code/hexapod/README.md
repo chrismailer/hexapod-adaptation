@@ -1,4 +1,4 @@
-# RARL Hexapod Python Simulator
+# RARL Hexapod Simulator
 
 <p align="center">
   <img src="weird_gait.gif" width="400"/>
