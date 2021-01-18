@@ -33,7 +33,7 @@ class Simulator:
 		self.t = 0 #: float: Current time of the simulator
 		self.dt = 1/240  #: float: Timestep of simulator. Default is 1/240s for PyBullet.
 		self.gravity = -9.81 #: float: Magnitude of gravity vector in the positive z direction
-		self.foot_friction = 0.7
+		self.foot_friction = 1.0 # 0.7
 		self.controller = controller
 		self.visualiser_enabled = visualiser
 		self.follow = follow
@@ -43,7 +43,6 @@ class Simulator:
 		self.locked_joints = []
 		for failed_leg in failed_legs:
 			self.locked_joints += [failed_leg*3-3, failed_leg*3-2, failed_leg*3-1]
-			print("failed leg")
 
 		self.camera_position = [0.7, 0, 0] #: list of float: GUI camera focus position in cartesian coordinates (self.controller.body_height)
 		self.camera_distance = 0.8 #: float: GUI camera distance from camera position
