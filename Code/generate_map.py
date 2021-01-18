@@ -11,14 +11,14 @@ def evaluate_gait(x, duration=5):
     try:
         controller = Controller(leg_params, body_height=body_height, velocity=velocity, period=1.0, crab_angle=-np.pi/6)
     except:
-        return -1, np.zeros(6)
+        return 0, np.zeros(6)
     simulator = Simulator(controller=controller, visualiser=False, collision_fatal=True)
     contact_sequence = np.full((6, 0), False)
     for t in np.arange(0, duration, step=simulator.dt):
         try:
             simulator.step()
         except RuntimeError as collision:
-            return -1, np.zeros(6)
+            return 0, np.zeros(6)
         contact_sequence = np.append(contact_sequence, simulator.supporting_legs().reshape(-1,1), axis=1)
     fitness = simulator.base_pos()[0] # distance travelled along x axis
     # summarise descriptor
