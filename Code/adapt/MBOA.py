@@ -80,7 +80,7 @@ def MBOA(map_filename, centroids_filename, eval, max_iter):
 			tested_indexes.append(index_to_test)
 			
 			# eval the performance
-			real_perf, _ = eval(ctrl_to_test)
+			real_perf = eval(ctrl_to_test)
 			print("Real perf:", real_perf)
 		
 		num_it += 1
@@ -104,46 +104,9 @@ def MBOA(map_filename, centroids_filename, eval, max_iter):
 	return num_it, best_index, best_perf, new_map
 
 
+
 if __name__ == "__main__":
-	n_maps = 5
-	num_its = np.array((0,n_maps))
-	best_indexes = np.array((0,n_maps))
-	best_perfs = np.array((0,n_maps))
+	print("running main")
+	# np.savetxt("./experiments/sim/20000_niches/indexes_1.dat", num_its)
 
-	for failure_index, failed_legs in enumerate([[1],[2],[3],[4],[5],[6]]):
-		print("Testing legs", failed_legs)
-		for map_num in range(1,n_maps+1):
-
-			# need to redefine the evaluate function each time to include the failed leg
-			def evaluate_gait(x, duration=5.0):
-				body_height, velocity, leg_params = reshape(x)
-				try:
-					controller = Controller(leg_params, body_height=body_height, velocity=velocity, crab_angle=-np.pi/6)
-				except:
-					return 0, np.zeros(6)
-				simulator = Simulator(controller, visualiser=False, collision_fatal=False, failed_legs=failed_legs)
-				fitness, contacts = 0, np.full((6, 0), False)
-				for t in np.arange(0, duration, step=simulator.dt):
-					try:
-						simulator.step()
-					except RuntimeError as error:
-						fitness = 0
-						break
-					fitness = simulator.base_pos()[0]
-					contacts = np.append(contacts, simulator.supporting_legs().reshape(-1,1), axis=1)
-				# summarise descriptor
-				descriptor = np.sum(contacts, axis=1) / np.size(contacts, axis=1)
-				descriptor = np.nan_to_num(descriptor, nan=0.0, posinf=0.0, neginf=0.0)
-				simulator.terminate()
-				return fitness, descriptor
-
-			num_it, best_index, best_perf, new_map = MBOA("./maps/niches_20000/map_%d.dat" % map_num, "./centroids/centroids_40000_6.dat", evaluate_gait, max_iter=40)
-			
-			num_its = np.vstack((num_its, num_it))
-			best_indexes[failure_index,:].append(best_index)
-			best_perfs[failure_index,:].append(best_perf)
-
-
-		# print('Failed Leg: %d' % failed_leg_1)
-		print(num_its)
 
