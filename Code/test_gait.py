@@ -41,10 +41,10 @@ def test_gait(leg_params, body_height=0.14, velocity=0.3, duration=5.0, visualis
 if __name__ == "__main__":
 	from hexapod.controllers.kinematic import tripod_gait, quadruped_gait, wave_gait
 
-	gait_map = np.loadtxt('./maps/niches_20000/map_1.dat')
+	gait_map = np.loadtxt('./maps/niches_20000/map_11.dat')
 	row_index = np.argmax(gait_map, axis=0)[0]
 	# gait_map = gait_map[gait_map[:,0] > 2.0]
-	# row_index = np.random.randint(0, gait_map.shape[0])
+	row_index = np.random.randint(0, gait_map.shape[0])
 	# row_index = 19079
 
 	fitness = gait_map[row_index, 0]
@@ -53,7 +53,7 @@ if __name__ == "__main__":
 	params = gait_map[row_index, 13:]
 	body_height, velocity, leg_params = reshape(params)
 
-	print(leg_params)
+	print(fitness)
 
 	# print(params)
 

@@ -12,16 +12,16 @@ matplotlib.rcParams.update({
 })
 
 # load simulated results
-scenario1 = np.loadtxt('../experiments/adapt_perf_1.dat').flatten() / 5
-scenario2 = np.loadtxt('../experiments/adapt_perf_2_2.dat').flatten() / 5
-scenario3 = np.loadtxt('../experiments/adapt_perf_2_1.dat').flatten() / 5
-scenario4 = np.loadtxt('../experiments/adapt_perf_2_0.dat').flatten() / 5
+scenario1 = np.loadtxt('../experiments/sim/40000_niches/adapt_perf_1.dat').flatten() / 5
+scenario2 = np.loadtxt('../experiments/sim/40000_niches/adapt_perf_2_2.dat').flatten() / 5
+scenario3 = np.loadtxt('../experiments/sim/40000_niches/adapt_perf_2_1.dat').flatten() / 5
+scenario4 = np.loadtxt('../experiments/sim/40000_niches/adapt_perf_2_0.dat').flatten() / 5
 
 # load control results
-control1 = np.loadtxt('../experiments/tripod_failure_1.dat').flatten()
-control2 = np.loadtxt('../experiments/tripod_failure_2_2.dat').flatten()
-control3 = np.loadtxt('../experiments/tripod_failure_2_1.dat').flatten()
-control4 = np.loadtxt('../experiments/tripod_failure_2_0.dat').flatten()
+control1 = np.loadtxt('../experiments/sim/tripod_failure_1.dat').flatten()
+control2 = np.loadtxt('../experiments/sim/tripod_failure_2_2.dat').flatten()
+control3 = np.loadtxt('../experiments/sim/tripod_failure_2_1.dat').flatten()
+control4 = np.loadtxt('../experiments/sim/tripod_failure_2_0.dat').flatten()
 
 # load real experiment data
 # real1 = np.loadtxt('../real_experiments/failure_1_2.dat')
@@ -32,7 +32,7 @@ control4 = np.loadtxt('../experiments/tripod_failure_2_0.dat').flatten()
 # real5 = np.loadtxt('../real_experiments/failure_0_2.dat')
 # real6 = np.loadtxt('../real_experiments/orient/failure_0_1.dat')
 
-normal_tripod_mean = np.mean(np.loadtxt('../experiments/tripod_no_failure.dat')) / 5
+normal_tripod_mean = np.mean(np.loadtxt('../experiments/sim/tripod_no_failure.dat')) / 5
 
 data = list([scenario1, scenario2, scenario3, scenario4])
 control = list([control1, control2, control3, control4])
@@ -75,6 +75,5 @@ plt.text(0.7, normal_tripod_mean-0.006, 'tripod gait without failures', horizont
 fig.tight_layout()
 plt.legend([bplot1["boxes"][0], bplot2["boxes"][0]], ['Adaptation', 'Tripod'], loc='upper right')
 
-plt.savefig('../../Final Report/figures/adapted_perf_sim.pdf')
-
-# plt.show()
+# plt.savefig('../../Final Report/figures/adapted_perf_sim.pdf')
+plt.show()
