@@ -5,7 +5,9 @@ from matplotlib.lines import Line2D
 
 # matplotlib.use("pgf")
 matplotlib.rcParams.update({
-    "pgf.texsystem": "pdflatex",
+    'pgf.texsystem': "pdflatex",
+    'pdf.fonttype': 42,
+	'ps.fonttype': 42,
     'font.family': 'serif',
     'text.usetex': True,
     'pgf.rcfonts': False,

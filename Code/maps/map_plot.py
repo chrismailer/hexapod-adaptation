@@ -6,7 +6,9 @@ import matplotlib.pyplot as plt
 def plot_map(data, map_num, niches):
 	# matplotlib.use("pgf")
 	matplotlib.rcParams.update({
-	    "pgf.texsystem": "pdflatex",
+	    'pgf.texsystem': "pdflatex",
+	    'pdf.fonttype': 42,
+		'ps.fonttype': 42,
 	    'font.family': 'serif',
 	    'text.usetex': True,
 	    'pgf.rcfonts': False,
