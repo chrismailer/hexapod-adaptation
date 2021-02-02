@@ -1,3 +1,4 @@
+import matplotlib.patches as mpatches
 import numpy as np
 from scipy import stats
 import matplotlib
@@ -11,10 +12,17 @@ matplotlib.rcParams.update({
     'pgf.rcfonts': False,
 })
 
+def set_box_color(bp, color):
+    plt.setp(bp['boxes'], color=color)
+    plt.setp(bp['whiskers'], color=color)
+    plt.setp(bp['caps'], color=color)
+    plt.setp(bp['medians'], color='black')
+
 # load simulated results
-scenario1 = np.loadtxt('../experiments/adapt_trials_1.dat').flatten()
-scenario2 = np.loadtxt('../experiments/adapt_trials_2_2.dat').flatten()
-sim = np.array((np.ones((10)), scenario1, scenario2))
+n_maps = 10
+scenario1 = np.loadtxt('../sim/40000_niches/trials_1.dat').flatten()
+scenario2 = np.loadtxt('../sim/40000_niches/trials_2.dat').flatten()
+sim = np.array((np.ones((n_maps)), scenario1, scenario2))
 
 # load control results
 # control1 = np.loadtxt('control_experiment.dat') / 5
@@ -34,40 +42,39 @@ real = np.array(([1,real1], [1,real2], [2,real3], [2,real4], [3,real5], [3,real6
 t_statistic, p_value = stats.ttest_ind(real.flatten(), np.hstack(sim))
 print(p_value)
 
-normal_tripod_mean = np.mean(np.loadtxt('../experiments/tripod_no_failure.dat')) / 5
+normal_tripod_mean = np.mean(np.loadtxt('../sim/tripod_0.dat')) / 5
 
 # plotting graph
 fig, ax = plt.subplots()
-fig.set_size_inches(w=4.7747, h=3.5)
+fig.set_size_inches(w=3.3, h=2.5)
 ax.yaxis.grid(True)
 ax.set_axisbelow(True)
-ax.set_title('Number of Adaptation Trials in Simulation vs Reality')
+ax.set_title('Number of Adaptation Trials')
 
 # ax.axhline(120/5, color='tab:red', linestyle='--', label='2 minute threshold')
 
 # ax.axhline(failed_tripod_mean, color='tab:red', linestyle='--', label='Failed Tripod Gait')
 # ax.axhspan(failed_tripod_max, failed_tripod_min, color='tab:red', alpha=0.25)
-
-bplot = ax.boxplot(sim, notch=True, showfliers=True, labels=['None', 'Scenario 1', 'Scenario 2'], widths=0.2, showmeans=True, patch_artist=True)
-scatter = ax.scatter(real[:,0], real[:,1], marker='x')
+flierprops = dict(marker='o', markersize=5, linestyle='none', markeredgecolor='darkgray')
+bp = ax.boxplot(sim, showfliers=True, flierprops=flierprops, labels=['None', 'S1', 'S2'], widths=0.2, patch_artist=True)
+real_scatter = ax.scatter(real[:,0], real[:,1], marker='x', color='tab:green')
 
 for i, point in enumerate(real):
-	if i+1==4:
+	if i in [0,3,4]:
 		plt.text(point[0]+0.05, point[1], str(i+1), verticalalignment='bottom')
 	else:
 		plt.text(point[0]+0.05, point[1], str(i+1), verticalalignment='top')
 
-# for patch in bplot1['boxes']:
-# 	patch.set_facecolor('tab:orange')
+set_box_color(bp, 'tab:blue')
 
-plt.ylabel('Number of trials')
-plt.xlabel('Failure')
+plt.ylabel('Trials')
+plt.xlabel('Failure scenario')
 # plt.xticks(np.arange(3), ['None', 'Scenario 1', 'Scenario 2'])
 plt.ylim(0, 40)
-plt.legend((scatter, bplot["boxes"][0]), ('Reality', 'Simulation'), loc='upper left')
+sim_patch = mpatches.Patch(color='tab:blue')
+plt.legend((real_scatter, sim_patch), ('Reality', 'Simulated'), loc='upper left')
 
-fig.tight_layout()
+fig.tight_layout(pad=0.1)
 
-# plt.savefig('../../Final Report/figures/adapt_trials_sim_vs_real.pdf')
-
+plt.savefig("/Users/chrismailer/Desktop/figures/sim_vs_real_trials_plot.pdf")
 plt.show()
