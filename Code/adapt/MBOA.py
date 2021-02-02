@@ -27,11 +27,10 @@ def UCB(mu_map, kappa, sigma_map):
 	return np.argmax(GP)
 
 
-def MBOA(map_filename, centroids_filename, eval, max_iter):
+def MBOA(map_filename, centroids_filename, eval, max_iter, rho=0.4, print_output=True):
 
 	alpha = 0.90
 	kappa = 0.05
-	rho = 0.4
 	variance_noise_square = 0.001
 
 	dim_x = 6
@@ -70,10 +69,10 @@ def MBOA(map_filename, centroids_filename, eval, max_iter):
 			index_to_test = np.argmax(n_fits)
 			started = True
 			real_perfs = []
-		print("Expected perf:", n_fits_real[index_to_test])
+		if print_output: print("Expected perf:", n_fits_real[index_to_test])
 		#if the behavior to test has already been tested, don't test it again
 		if(index_to_test in tested_indexes):
-			print("Behaviour already tested")
+			if print_output: print("Behaviour already tested")
 			break
 		else:
 			ctrl_to_test = n_ctrls[index_to_test]
@@ -81,7 +80,7 @@ def MBOA(map_filename, centroids_filename, eval, max_iter):
 			
 			# eval the performance
 			real_perf = eval(ctrl_to_test)
-			print("Real perf:", real_perf)
+			if print_output: print("Real perf:", real_perf)
 		
 		num_it += 1
 
