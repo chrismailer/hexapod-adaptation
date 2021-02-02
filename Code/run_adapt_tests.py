@@ -4,17 +4,18 @@ from adapt.MBOA import MBOA
 import numpy as np
 
 # parameters
-map_count = 10
+map_count = 18
 niches = 40000
-failure_scenario = 2
+failure_scenario = 4
 
-failure_scenario_1 = [[1],[2],[3],[4],[5],[6]]
-failure_scenario_2 = [[1,4],[2,5],[3,6]]
-failure_scenario_3 = [[1,3],[2,4],[3,5],[4,6],[5,1],[6,2]]
-failure_scenario_4 = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,1]]
+S0 = [[]]
+S1 = [[1],[2],[3],[4],[5],[6]]
+S2 = [[1,4],[2,5],[3,6]]
+S3 = [[1,3],[2,4],[3,5],[4,6],[5,1],[6,2]]
+S4 = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,1]]
 
-scenarios = [failure_scenario_1, failure_scenario_2, failure_scenario_3, failure_scenario_4]
-failures = scenarios[failure_scenario-1]
+scenarios = [S0, S1, S2, S3, S4]
+failures = scenarios[failure_scenario]
 
 num_its = np.zeros((len(failures), map_count))
 best_indexes = np.zeros((len(failures), map_count))
@@ -55,5 +56,5 @@ for failure_index, failed_legs in enumerate(failures):
 		best_perfs[failure_index, map_num-1] = best_perf
 
 
-np.savetxt(f"./experiments/sim/{niches}_niches/trials_{failure_scenario}_check.dat", num_its, '%d')
-np.savetxt(f"./experiments/sim/{niches}_niches/perfs_{failure_scenario}_check.dat", best_perfs)
+np.savetxt(f"./experiments/sim/{niches}_niches/trials_{failure_scenario}.dat", num_its, '%d')
+np.savetxt(f"./experiments/sim/{niches}_niches/perfs_{failure_scenario}.dat", best_perfs)
