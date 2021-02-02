@@ -64,7 +64,7 @@ ax.set_ylim((start, end))
 
 plt.xticks([1, 2], labels)
 plt.tight_layout(pad=0.1)
-plt.savefig("/Users/chrismailer/Desktop/figures/global_performance_plot.pdf")
+plt.savefig("../figures/global_performance_plot.pdf")
 plt.show()
 
 
@@ -86,7 +86,7 @@ set_box_color(bp40, color_40)
 
 plt.xticks([1, 2], labels)
 plt.tight_layout(pad=0.1)
-plt.savefig("/Users/chrismailer/Desktop/figures/reliability_plot.pdf")
+plt.savefig("../figures/reliability_plot.pdf")
 plt.show()
 
 
@@ -108,7 +108,7 @@ set_box_color(bp40, color_40)
 
 plt.xticks([1, 2], labels)
 plt.tight_layout(pad=0.1)
-plt.savefig("/Users/chrismailer/Desktop/figures/precision_plot.pdf")
+plt.savefig("../figures/precision_plot.pdf")
 plt.show()
 
 
@@ -133,5 +133,5 @@ set_box_color(bp40, color_40)
 
 plt.xticks([1, 2], labels)
 plt.tight_layout(pad=0.1)
-plt.savefig("/Users/chrismailer/Desktop/figures/coverage_plot.pdf")
+plt.savefig("../figures/coverage_plot.pdf")
 plt.show()

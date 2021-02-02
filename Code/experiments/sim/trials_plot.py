@@ -72,5 +72,5 @@ plt.xlim(-2, len(ticks)*2)
 plt.ylim(0, 45)
 plt.tight_layout(pad=0.1)
 
-plt.savefig("/Users/chrismailer/Desktop/figures/trials_plot.pdf")
+plt.savefig("../../figures/trials_plot.pdf")
 plt.show()

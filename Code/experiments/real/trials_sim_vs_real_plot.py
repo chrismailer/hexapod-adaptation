@@ -76,5 +76,5 @@ plt.legend((real_scatter, sim_patch), ('Reality', 'Simulated'), loc='upper left'
 
 fig.tight_layout(pad=0.1)
 
-plt.savefig("/Users/chrismailer/Desktop/figures/sim_vs_real_trials_plot.pdf")
+plt.savefig("../../figures/sim_vs_real_trials_plot.pdf")
 plt.show()

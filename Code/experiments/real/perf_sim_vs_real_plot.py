@@ -86,5 +86,5 @@ plt.legend((ref_scatter, real_scatter, sim_patch), ('Reference', 'Real', 'Simula
 
 fig.tight_layout(pad=0.1)
 
-plt.savefig("/Users/chrismailer/Desktop/figures/sim_vs_real_perfs_plot.pdf")
+plt.savefig("../../figures/sim_vs_real_perfs_plot.pdf")
 plt.show()

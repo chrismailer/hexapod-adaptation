@@ -78,5 +78,5 @@ plt.legend((scatter, custom_line), ('Adapt', 'Default'), loc='upper right')
 
 fig.tight_layout(pad=0.1)
 
-plt.savefig("/Users/chrismailer/Desktop/figures/real_perfs_plot.pdf")
+plt.savefig("../../figures/real_perfs_plot.pdf")
 plt.show()

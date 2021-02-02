@@ -67,5 +67,5 @@ def time2trials(x):
 
 fig.tight_layout()
 
-plt.savefig("/Users/chrismailer/Desktop/figures/real_trials_plot.pdf")
+plt.savefig("../../figures/real_trials_plot.pdf")
 plt.show()

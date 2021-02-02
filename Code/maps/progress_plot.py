@@ -50,10 +50,11 @@ color_40k = 'tab:blue'
 fill_alpha = 0.3
 custom_lines = [Line2D([0], [0], color='tab:orange', lw=4), Line2D([0], [0], color='tab:blue', lw=4)]
 labels = ['20k', '40k']
+height = 2.5
 
 # max fitness
 fig, ax = plt.subplots()
-fig.set_size_inches(w=2.2, h=2.5)
+fig.set_size_inches(w=2.2, h=height)
 
 ax.grid(True, which='major', axis='y')
 ax.set_xlabel('Evaluations ($\\times10^6$)')
@@ -73,13 +74,13 @@ ax.fill_between(n_evals, np.min(max_fit_40, axis=1), np.max(max_fit_40, axis=1),
 plt.legend(custom_lines, labels, loc='lower right')
 
 fig.tight_layout(pad=0.1)
-plt.savefig("/Users/chrismailer/Desktop/figures/maps_max.pdf")
+plt.savefig("../figures/maps_max.pdf")
 plt.show()
 
 
 # mean fitness
 fig, ax = plt.subplots()
-fig.set_size_inches(w=2.2, h=2.5)
+fig.set_size_inches(w=2.2, h=height)
 
 ax.grid(True, which='major', axis='y')
 ax.set_xlabel('Evaluations ($\\times10^6$)')
@@ -99,13 +100,13 @@ ax.fill_between(n_evals, np.min(mean_fit_40, axis=1), np.max(mean_fit_40, axis=1
 plt.legend(custom_lines, labels, loc='lower right')
 
 fig.tight_layout(pad=0.1)
-plt.savefig("/Users/chrismailer/Desktop/figures/maps_avg.pdf")
+plt.savefig("../figures/maps_avg.pdf")
 plt.show()
 
 
 # map coverage
 fig, ax = plt.subplots()
-fig.set_size_inches(w=2.2, h=2.5)
+fig.set_size_inches(w=2.2, h=height)
 
 ax.grid(True, which='major', axis='y')
 ax.set_xlabel('Evaluations ($\\times10^6$)')
@@ -123,5 +124,5 @@ ax.fill_between(n_evals, np.min(niches_40, axis=1), np.max(niches_40, axis=1), a
 plt.legend(custom_lines, labels, loc='lower right')
 
 fig.tight_layout(pad=0.1)
-plt.savefig("/Users/chrismailer/Desktop/figures/maps_coverage.pdf")
+plt.savefig("../figures/maps_coverage.pdf")
 plt.show()
