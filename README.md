@@ -12,7 +12,7 @@ This project enables gait adaptation to failure on a custom Hexapod robot shown 
 
 `Code` contains the hexapod simulation, MAP-Elites, M-BOA, generated maps, and results\
 `Hexapod Control` contains the modified onboard C++ control code for the robotic platform\
-`Hexapod SolidWorks` contains the updated SolidWorks files for the hexapod platform
+`Hexapod SolidWorks` contains the updated SolidWorks model of the robot
 
 Videos of the project can be found [here](https://drive.google.com/drive/folders/18nBqK6PnA0IYt2r0Ebi3O82trxsxnqot?usp=sharing)
 
