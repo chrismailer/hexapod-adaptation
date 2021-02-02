@@ -16,7 +16,7 @@
   </material>
 
   <!-- BASE LINK -->
-  <link concave="yes" name="base_link">
+  <link name="base_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 -6.800E-4" />
       <mass value="1.320" />
