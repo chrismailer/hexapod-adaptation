@@ -1,6 +1,6 @@
 # Implementation of IT&E on the RARL Hexapod
 
-This project enables gait adaptation to failure on a custom Hexapod robot shown below using the [Intelligent Trial & Error (IT&E) algorithm](https://doi.org/10.1038/nature14422) as part of my final year undergraduate project.
+This project enables gait adaptation to failure on a custom Hexapod robot shown below using the [Intelligent Trial & Error (IT&E) algorithm](https://doi.org/10.1038/nature14422).
 
 <p align="center">
   <img src="cover_image.png" width="400"/>
