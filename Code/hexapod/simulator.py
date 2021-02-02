@@ -33,7 +33,7 @@ class Simulator:
 		self.t = 0 #: float: Current time of the simulator
 		self.dt = 1/240  #: float: Timestep of simulator. Default is 1/240s for PyBullet.
 		self.gravity = -9.81 #: float: Magnitude of gravity vector in the positive z direction
-		self.foot_friction = 1.0 # 0.7
+		self.foot_friction = 0.7
 		self.controller = controller
 		self.visualiser_enabled = visualiser
 		self.follow = follow
@@ -150,6 +150,11 @@ class Simulator:
 		link_indices = self.joints[:,0]
 		links = link_indices.reshape(6,3)
 		return links
+
+
+	def set_foot_friction(self, foot_friction):
+		self.foot_friction = foot_friction
+		self.client.changeDynamics(self.groundId, -1, lateralFriction=foot_friction)
 
 
 	def terminate(self):
@@ -294,11 +299,40 @@ class Simulator:
 		return self.client.getBasePositionAndOrientation(self.hexId)[0]
 
 
+def evaulate_gait(leg_params, body_height=0.14, velocity=0.3, duration=5.0, visualiser=True, collisions=False, failed_legs=[]):
+	# controller will return an error if parameters are not feasible
+	controller = Controller(leg_params, body_height=body_height, velocity=velocity, crab_angle=-np.pi/6)
+	# initialise simulator
+	simulator = Simulator(controller, follow=True, visualiser=visualiser, collision_fatal=collisions, failed_legs=failed_legs)
+	# initialise reward and descriptor
+	contact_sequence = np.full((6, 0), False)
+	# simulator returns error if collision occurs
+	for t in np.arange(0, duration, step=simulator.dt):
+		try:
+			simulator.step()
+		except RuntimeError as error:
+			print(error)
+			reward = 0
+			break
+		contact_sequence = np.append(contact_sequence, simulator.supporting_legs().reshape(-1,1), axis=1)
+	reward = simulator.base_pos()[0]
+	# summarise descriptor
+	descriptor = np.sum(contact_sequence, axis=1) / np.size(contact_sequence, axis=1)
+	# plot footfall diagram
+	plot_footfall(contact_sequence)
+
+	simulator.terminate()
+
+	return reward, descriptor
+
+
+
+
 if __name__ == "__main__":
 	from controllers.kinematic import Controller
 	from controllers.kinematic import stationary
 	
-	controller = Controller(stationary, body_height=0.13, velocity=0.0, crab_angle=-np.pi/6)
-	simulator = Simulator(controller=controller, follow=False, visualiser=True, collision_fatal=False)
+	controller = Controller(stationary, body_height=0.11, velocity=0.0, crab_angle=-np.pi/6)
+	simulator = Simulator(controller=controller, follow=False, visualiser=True, collision_fatal=False, camera_distance=1.0, camera_yaw=90, camera_pitch=-55)
 	while True:
 		simulator.step()
