@@ -54,7 +54,7 @@ color_20 = 'tab:orange'
 color_40 = 'tab:blue'
 
 fig, ax = plt.subplots()
-fig.set_size_inches(w=3.3, h=2.0)
+fig.set_size_inches(w=3.3, h=2.5)
 ax.set_axisbelow(True)
 ax.yaxis.grid(True)
 ax.set_title('Adapted Walking Speed')
