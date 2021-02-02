@@ -26,23 +26,20 @@ real5 = np.loadtxt('experiment_5.dat').shape[0]
 real6 = np.loadtxt('experiment_6.dat').shape[0]
 real = np.array([[1,real1], [1,real2], [2,real3], [2,real4], [3,real5], [3,real6]])
 
-t_statistic, p_value = stats.ttest_ind(real.flatten(), np.hstack(control))
-print(p_value)
-
 # plotting graph
 fig, ax = plt.subplots()
-fig.set_size_inches(w=4.7747, h=3.5)
+fig.set_size_inches(w=3.3, h=2.5)
 ax.yaxis.grid(True)
 ax.set_axisbelow(True)
 ax.set_title('Number of Adaptation Trials')
-plt.xticks(np.arange(1,4), ['None', 'Scenario 1', 'Scenario 2'])
+plt.xticks(np.arange(1,4), ['None', 'S1', 'S2'])
 
-ax.axhline(120/5, color='tab:red', linestyle='--', label='2 minute threshold')
+ax.axhline(120/5, color='tab:gray', linestyle='-.', label='2 minute line')
 # ax.axhspan(failed_tripod_max, failed_tripod_min, color='tab:red', alpha=0.25)
 
 # bplot2 = ax.boxplot(notch=True, showfliers=True, labels=['None', 'Scenario 1', 'Scenario 2'], widths=0.2, showmeans=True, patch_artist=True)
 
-scatter = ax.scatter(real[:,0], real[:,1], marker='x', label='Adaptation')
+scatter = ax.scatter(real[:,0], real[:,1], marker='x', label='Adapt')
 
 for i, point in enumerate(real):
 	if i+1 == 4:
@@ -53,11 +50,11 @@ for i, point in enumerate(real):
 # for patch in bplot2['boxes']:
 # 	patch.set_facecolor('tab:orange')
 
-plt.ylabel('Number of trials')
-plt.xlabel('Failure')
+plt.ylabel('Trials')
+plt.xlabel('Failure scenario')
 plt.ylim(0, 40)
 plt.xlim(0.5, 3.5)
-plt.legend(loc='upper left')
+# plt.legend([scatter], ['Adapt'], loc='upper left')
 
 def trials2time(x):
     return x * 5
@@ -65,11 +62,10 @@ def trials2time(x):
 def time2trials(x):
     return x / 5
 
-secax = ax.secondary_yaxis('right', functions=(trials2time, time2trials))
-secax.set_ylabel('Adaptation duration ($s$)')
+# secax = ax.secondary_yaxis('right', functions=(trials2time, time2trials))
+# secax.set_ylabel('Adaptation duration ($s$)')
 
 fig.tight_layout()
 
-plt.savefig('../../Final Report/figures/adapt_trials_real.pdf')
-
-# plt.show()
+plt.savefig("/Users/chrismailer/Desktop/figures/real_trials_plot.pdf")
+plt.show()

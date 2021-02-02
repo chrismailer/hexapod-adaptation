@@ -18,10 +18,10 @@ scenario3 = np.loadtxt('../experiments/sim/40000_niches/adapt_perf_2_1.dat').fla
 scenario4 = np.loadtxt('../experiments/sim/40000_niches/adapt_perf_2_0.dat').flatten() / 5
 
 # load control results
-control1 = np.loadtxt('../experiments/sim/tripod_failure_1.dat').flatten()
-control2 = np.loadtxt('../experiments/sim/tripod_failure_2_2.dat').flatten()
-control3 = np.loadtxt('../experiments/sim/tripod_failure_2_1.dat').flatten()
-control4 = np.loadtxt('../experiments/sim/tripod_failure_2_0.dat').flatten()
+control1 = np.loadtxt('../experiments/sim/tripod_1.dat').flatten()
+control2 = np.loadtxt('../experiments/sim/tripod_2.dat').flatten()
+control3 = np.loadtxt('../experiments/sim/tripod_3.dat').flatten()
+control4 = np.loadtxt('../experiments/sim/tripod_4.dat').flatten()
 
 # load real experiment data
 # real1 = np.loadtxt('../real_experiments/failure_1_2.dat')
