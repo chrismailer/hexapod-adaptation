@@ -1,6 +1,6 @@
 # Hexapod Gait Adaptation to Leg Failure
 
-This code in this repository enables gait adaptation to failure on a custom Hexapod robot shown below using the [Intelligent Trial & Error (IT&E) algorithm](https://doi.org/10.1038/nature14422), and investigates the impact of behaviour-performance map size on adaptation perfromance.
+This code in this repository enables gait adaptation to failure on a custom Hexapod robot shown below using the [Intelligent Trial & Error (IT&E) algorithm](https://doi.org/10.1038/nature14422), and investigates the impact of behaviour-performance map size on adaptation performance.
 
 <p align="center">
   <img src="cover_image.png" width="400"/>
