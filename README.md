@@ -15,11 +15,11 @@ This code in this repository enables gait adaptation to failure on a custom Hexa
 `Hexapod SolidWorks` contains the updated SolidWorks model of the robot
 
 ## Videos
-[Adapting to reality gap](https://youtu.be/6fp-Spu_-Wc)
-[Adapting to Failure Scenario S1](https://youtu.be/4rsNQu46i6c)
+[Adapting to reality gap](https://youtu.be/6fp-Spu_-Wc)\
+[Adapting to Failure Scenario S1](https://youtu.be/4rsNQu46i6c)\
 [Adapting to Failure Scenario S2](https://youtu.be/6fp-Spu_-Wc)
 
-# Dependencies
+## Dependencies
 - numpy
 - pybullet
 - matplotlib
