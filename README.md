@@ -14,7 +14,7 @@ This code in this repository enables gait adaptation to failure on a custom Hexa
 `Hexapod Control` contains the modified onboard C++ gait controller code for the robot\
 `Hexapod SolidWorks` contains the updated SolidWorks model of the robot
 
-Videos of the project can be found [here](https://drive.google.com/drive/folders/18nBqK6PnA0IYt2r0Ebi3O82trxsxnqot?usp=sharing)
+Videos of the project can be found [here](https://www.youtube.com/channel/UCQU_e6ykYzKXD_87R9cz4Dw/videos)
 
 # Dependencies
 - numpy
