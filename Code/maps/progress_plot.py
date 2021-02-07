@@ -13,7 +13,7 @@ matplotlib.rcParams.update({
     'pgf.rcfonts': False,
 })
 
-n_maps = 18
+n_maps = 20
 
 mean_fit_40 = np.empty((16737,n_maps))
 max_fit_40 = np.empty((16737,n_maps))

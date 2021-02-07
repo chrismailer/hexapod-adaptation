@@ -20,7 +20,7 @@ def set_box_color(bp, color):
     plt.setp(bp['caps'], color=color)
     plt.setp(bp['medians'], color='black')
 
-n_maps = 10
+n_maps = 20
 
 max_perf = []
 for n in range(n_maps):

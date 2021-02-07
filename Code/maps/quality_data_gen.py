@@ -11,7 +11,7 @@ def load_map(filename, dim=6, dim_ctrl=32):
 centroids_20 = np.loadtxt('../centroids/centroids_20000_6.dat')
 centroids_40 = np.loadtxt('../centroids/centroids_40000_6.dat')
 
-n_maps = 16
+n_maps = 20
 niches = [20000, 40000]
 
 global_performance = np.zeros((n_maps, len(niches)))

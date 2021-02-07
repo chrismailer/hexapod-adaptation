@@ -4,7 +4,7 @@ from adapt.MBOA import MBOA
 import numpy as np
 
 # parameters
-map_count = 18
+map_count = 20
 niches = 40000
 failure_scenario = 4
 
@@ -49,7 +49,7 @@ for failure_index, failed_legs in enumerate(failures):
 			simulator.terminate()
 			return fitness
 
-		num_it, best_index, best_perf, new_map = MBOA(f"./maps/niches_{niches}/map_{map_num}.dat", f"./centroids/centroids_{niches}_6.dat", evaluate_gait, max_iter=40)
+		num_it, best_index, best_perf, new_map = MBOA(f"./maps/niches_{niches}/map_{map_num}.dat", f"./centroids/centroids_{niches}_6.dat", evaluate_gait, max_iter=40, print_output=False)
 
 		num_its[failure_index, map_num-1] = num_it
 		best_indexes[failure_index, map_num-1] = best_index

@@ -21,10 +21,10 @@ def set_box_color(bp, color):
     plt.setp(bp['medians'], color='black')
 
 # load simulated results
-n_maps = 10
-scenario1 = np.loadtxt('../sim/40000_niches/trials_1.dat').flatten()
-scenario2 = np.loadtxt('../sim/40000_niches/trials_2.dat').flatten()
-sim = np.array((np.ones((n_maps)), scenario1, scenario2))
+S0 = np.loadtxt('../sim/40000_niches/trials_0.dat').flatten()
+S1 = np.loadtxt('../sim/40000_niches/trials_1.dat').flatten()
+S2 = np.loadtxt('../sim/40000_niches/trials_2.dat').flatten()
+sim = np.array((S0, S1, S2))
 
 # load control results
 # control1 = np.loadtxt('control_experiment.dat') / 5

@@ -25,7 +25,7 @@ def evaluate_gait(x, duration=5.0):
 
 
 # experiment
-n_maps = 10
+n_maps = 20
 niches = 20000
 rhos = np.arange(0.1, 0.825, 0.025)
 failures = [[1,3], [2,4], [3,5], [4,6], [5,1], [6, 2]]
