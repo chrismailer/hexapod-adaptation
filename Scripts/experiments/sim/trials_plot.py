@@ -51,7 +51,7 @@ color_40 = 'tab:blue'
 box_width = 0.4
 
 fig, ax = plt.subplots()
-fig.set_size_inches(w=3.3, h=2.5)
+fig.set_size_inches(w=3.3, h=2.0)
 ax.yaxis.grid(True)
 ax.set_title('Number of Adaptation Trials')
 ax.set_xlabel('Failure scenario')

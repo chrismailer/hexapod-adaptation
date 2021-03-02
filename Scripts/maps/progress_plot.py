@@ -52,7 +52,7 @@ color_40k = 'tab:blue'
 fill_alpha = 0.3
 custom_lines = [Line2D([0], [0], color='tab:orange', lw=4), Line2D([0], [0], color='tab:blue', lw=4)]
 labels = ['20k', '40k']
-height = 2.5
+height = 2.0
 
 # max fitness
 fig, ax = plt.subplots()

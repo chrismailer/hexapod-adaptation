@@ -29,7 +29,7 @@ coverage = np.loadtxt('coverage.dat')
 # customisation
 box_widths = 0.4
 plot_width = 1.6
-plot_height = 2.0
+plot_height = 1.5
 color_20 = 'tab:orange'
 color_40 = 'tab:blue'
 flierprops = dict(marker='o', markersize=5, linestyle='none', markeredgecolor='darkgray')
