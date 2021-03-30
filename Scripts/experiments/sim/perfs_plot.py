@@ -21,15 +21,18 @@ def set_box_color(bp, color):
     plt.setp(bp['medians'], color='black')
 
 # load data
+sim_data_10 = []
 sim_data_20 = []
 sim_data_40 = []
 tripod_data = []
 tripod_mean_data = []
 
 for scenario in range(5):
+    data_10 = list(np.loadtxt(f'./10000_niches/perfs_{scenario}.dat').flatten() / 5)
     data_20 = list(np.loadtxt(f'./20000_niches/perfs_{scenario}.dat').flatten() / 5)
     data_40 = list(np.loadtxt(f'./40000_niches/perfs_{scenario}.dat').flatten() / 5)
     tripod = list(np.loadtxt(f'tripod_{scenario}.dat').flatten())
+    sim_data_10.append(data_10)
     sim_data_20.append(data_20)
     sim_data_40.append(data_40)
     tripod_data.append(tripod)
@@ -52,6 +55,7 @@ for scenario in range(4):
 
 ticks = ['None', 'S1', 'S2', 'S3', 'S4']
 box_width = 0.4
+color_10 = 'tab:green'
 color_20 = 'tab:orange'
 color_40 = 'tab:blue'
 
@@ -68,8 +72,9 @@ meanline = dict(linestyle='-', color='black')
 meanpoint = dict(marker='D', markeredgecolor='black', markerfacecolor='red')
 positions = np.array(range(len(sim_data_40)))*2.0
 
-bp20 = plt.boxplot(sim_data_20, positions=positions-0.3, widths=box_width, showfliers=True, flierprops=flierprops, patch_artist=True)
-bp40 = plt.boxplot(sim_data_40, positions=positions+0.3, widths=box_width, showfliers=True, flierprops=flierprops, patch_artist=True)
+bp10 = plt.boxplot(sim_data_10, positions=positions-0.5, widths=box_width, showfliers=True, flierprops=flierprops, patch_artist=True)
+bp20 = plt.boxplot(sim_data_20, positions=positions-0.0, widths=box_width, showfliers=True, flierprops=flierprops, patch_artist=True)
+bp40 = plt.boxplot(sim_data_40, positions=positions+0.5, widths=box_width, showfliers=True, flierprops=flierprops, patch_artist=True)
 
 # bp = plt.boxplot(tripod_data, positions=positions, widths=0.4, showfliers=True, flierprops=flierprops, notch=True, showmeans=True, patch_artist=True)
 
@@ -77,12 +82,13 @@ plt.scatter(positions, tripod_mean_data, marker='*', color='tab:red')
 
 # ax.axhline(tripod_mean, color='tab:red', linestyle='-.', label='Default Tripod Gait')
 
-set_box_color(bp40, color_40)
+set_box_color(bp10, color_10)
 set_box_color(bp20, color_20)
+set_box_color(bp40, color_40)
 # set_box_color(bp, 'tab:red')
 
-custom_lines = [mpatches.Patch(color=color_20), mpatches.Patch(color=color_40)]
-plt.legend(custom_lines, ['20k', '40k'])
+custom_lines = [mpatches.Patch(color=color_10), mpatches.Patch(color=color_20), mpatches.Patch(color=color_40)]
+plt.legend(custom_lines, ['10k', '20k', '40k'])
 
 plt.xticks(range(0, len(ticks)*2, 2), ticks)
 plt.xlim(-2, len(ticks)*2)
