@@ -1,0 +1,3 @@
+[submodule "Scripts/hexapod"]
+	path = Scripts/hexapod
+	url = https://github.com/chrismailer/hexapod.git
