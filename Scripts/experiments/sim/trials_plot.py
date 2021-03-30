@@ -21,14 +21,14 @@ def set_box_color(bp, color):
     plt.setp(bp['medians'], color='black')
 
 # load data
+sim_data_10 = []
 sim_data_20 = []
 sim_data_40 = []
 
 for scenario in range(1,5):
-	data_20 = list(np.loadtxt(f'./20000_niches/trials_{scenario}.dat').flatten())
-	data_40 = list(np.loadtxt(f'./40000_niches/trials_{scenario}.dat').flatten())
-	sim_data_20.append(data_20)
-	sim_data_40.append(data_40)
+    sim_data_10.append(list(np.loadtxt(f'./10000_niches/trials_{scenario}.dat').flatten()))
+    sim_data_20.append(list(np.loadtxt(f'./20000_niches/trials_{scenario}.dat').flatten()))
+    sim_data_40.append(list(np.loadtxt(f'./40000_niches/trials_{scenario}.dat').flatten()))
 
 # adaptation stats
 print('adaptation statistics')
@@ -46,6 +46,7 @@ print('S4:', p_value)
 
 
 ticks = ['S1', 'S2', 'S3', 'S4']
+color_10 = 'tab:green'
 color_20 = 'tab:orange'
 color_40 = 'tab:blue'
 box_width = 0.4
@@ -59,15 +60,17 @@ ax.set_ylabel('Trials')
 
 flierprops = dict(marker='o', markersize=5, linestyle='none', markeredgecolor='darkgray')
 positions = np.array(range(len(sim_data_40)))*2.0
-bp20 = plt.boxplot(sim_data_20, positions=positions-0.3, widths=box_width, showfliers=True, flierprops=flierprops, patch_artist=True)
-bp40 = plt.boxplot(sim_data_40, positions=positions+0.3, widths=box_width, showfliers=True, flierprops=flierprops, patch_artist=True)
+bp10 = plt.boxplot(sim_data_10, positions=positions-0.5, widths=box_width, showfliers=True, flierprops=flierprops, patch_artist=True)
+bp20 = plt.boxplot(sim_data_20, positions=positions-0.0, widths=box_width, showfliers=True, flierprops=flierprops, patch_artist=True)
+bp40 = plt.boxplot(sim_data_40, positions=positions+0.5, widths=box_width, showfliers=True, flierprops=flierprops, patch_artist=True)
+set_box_color(bp10, color_10)
 set_box_color(bp20, color_20)
 set_box_color(bp40, color_40)
 
 # ax.axhline(120/5, color='tab:gray', linestyle='-.', label='2 minute line')
 
-custom_lines = [mpatches.Patch(color=color_20), mpatches.Patch(color=color_40)]
-plt.legend(custom_lines, ['20k', '40k'])
+custom_lines = [mpatches.Patch(color=color_10), mpatches.Patch(color=color_20), mpatches.Patch(color=color_40)]
+plt.legend(custom_lines, ['10k', '20k', '40k'])
 
 plt.xticks(range(0, len(ticks) * 2, 2), ticks)
 plt.xlim(-2, len(ticks)*2)
