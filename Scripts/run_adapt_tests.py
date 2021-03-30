@@ -4,8 +4,8 @@ from adapt.MBOA import MBOA
 import numpy as np
 
 # parameters
-map_count = 20
-niches = 40000
+map_count = 4
+niches = 10000
 failure_scenario = 4
 
 S0 = [[]]

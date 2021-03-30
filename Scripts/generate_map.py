@@ -31,8 +31,8 @@ def evaluate_gait(x, duration=5):
 if __name__ == '__main__':
     params = \
         {
-            # more of this -> higher-quality CVT (400000)
-            "cvt_samples": 10000000,
+            # more of this -> higher-quality CVT
+            "cvt_samples": 1000000,
             # we evaluate in batches to parallelise
             "batch_size": 2390,
             # proportion of niches to be filled before starting (400)
@@ -50,5 +50,5 @@ if __name__ == '__main__':
             "max": 1,
         }
 
-    archive = cvt_map_elites.compute(6, 32, evaluate_gait, n_niches=20000, max_evals=40e6, log_file=open('log.dat', 'w'), params=params)
+    archive = cvt_map_elites.compute(6, 32, evaluate_gait, n_niches=60000, max_evals=40e6, log_file=open('log.dat', 'w'), params=params)
 
