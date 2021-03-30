@@ -65,7 +65,7 @@ def plot_map(data, map_num, niches):
 
 if __name__ == "__main__":
 	map_num = 8
-	niches = 20000
-	data = np.loadtxt(f'./niches_{niches}/map_{map_num}.dat')
+	niches = 20 #thousand
+	data = np.loadtxt(f'./{niches}k/map_{map_num}.dat')
 	# data = np.loadtxt('../real_experiments/adapted_map_3.dat')
 	plot_map(data, map_num, niches)
