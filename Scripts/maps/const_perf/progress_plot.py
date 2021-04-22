@@ -1,0 +1,178 @@
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+# matplotlib.use("pgf")
+matplotlib.rcParams.update({
+    'pgf.texsystem': "pdflatex",
+    'pdf.fonttype': 42,
+	'ps.fonttype': 42,
+    'font.family': 'serif',
+    'text.usetex': True,
+    'pgf.rcfonts': False,
+})
+
+n_maps = 10
+
+mean_fit_40 = np.zeros((16737,n_maps))
+max_fit_40 = np.zeros((16737,n_maps))
+
+mean_fit_20 = np.zeros((6279,n_maps))
+max_fit_20 = np.zeros((6279,n_maps))
+
+mean_fit_10 = np.zeros((4186,n_maps))
+max_fit_10 = np.zeros((4186,n_maps))
+
+mean_fit_60 = np.zeros((16737,n_maps))
+max_fit_60 = np.zeros((16737,n_maps))
+
+niches_10 = np.zeros((4186,n_maps))
+niches_20 = np.zeros((6279,n_maps))
+niches_40 = np.zeros((16737,n_maps))
+niches_60 = np.zeros((16737,n_maps))
+
+n_evals = []
+
+for n in range(1, n_maps+1):
+	log_10 = np.loadtxt(f'./10k/log_{n}.dat')
+	log_20 = np.loadtxt(f'./20k/log_{n}.dat')
+	log_40 = np.loadtxt(f'./40k/log_{n}.dat')
+	log_60 = np.loadtxt(f'./60k/log_{n}.dat')
+	max_fit_10[:,n-1] = log_10[:,2] / 5.0
+	max_fit_20[:,n-1] = log_20[:,2] / 5.0
+	max_fit_40[:,n-1] = log_40[:,2] / 5.0
+	max_fit_60[:,n-1] = log_60[:,2] / 5.0
+	mean_fit_10[:,n-1] = log_10[:,3] / 5.0
+	mean_fit_20[:,n-1] = log_20[:,3] / 5.0
+	mean_fit_40[:,n-1] = log_40[:,3] / 5.0
+	mean_fit_60[:,n-1] = log_60[:,3] / 5.0
+	n_evals = log_10[:,0] / 1e6
+	niches_10[:, n-1] = log_10[:,1] / 100
+	niches_20[:, n-1] = log_20[:,1] / 200
+	niches_40[:, n-1] = log_40[:,1] / 400
+	niches_60[:, n-1] = log_60[:,1] / 600
+	# if n < 10:
+	# 	niches_40[:, n-1] = log_40[:,1] / 400
+	# else:
+	# 	niches_40[:, n-1] = log_40[:,1] / 400 - 13.7 # accounts for error where failed gaits were mistakenly put into a niche
+
+max_fit_10[max_fit_10 <= 0] = np.nan
+max_fit_20[max_fit_20 <= 0] = np.nan
+max_fit_40[max_fit_40 <= 0] = np.nan
+max_fit_60[max_fit_60 <= 0] = np.nan
+
+# customisation
+color_10k = 'tab:green'
+color_20k = 'tab:orange'
+color_40k = 'tab:blue'
+color_60k = 'tab:pink'
+fill_alpha = 0.3
+custom_lines = [Line2D([0], [0], color=color_10k, lw=4), Line2D([0], [0], color=color_20k, lw=4), Line2D([0], [0], color=color_40k, lw=4), Line2D([0], [0], color=color_60k, lw=4)]
+labels = ['10k', '20k', '40k']
+height = 2.5
+
+# max fitness plot
+fig, ax = plt.subplots()
+fig.set_size_inches(w=2.2, h=height)
+
+ax.grid(True, which='major', axis='y')
+ax.set_xlabel('Evaluations ($\\times10^6$)')
+ax.set_ylabel('Gait speed ($m/s$)')
+ax.set_xlim((0,40))
+ax.set_ylim((0,0.6))
+ax.axhline(0.5, color='gray', linestyle='-.', label='maximum')
+ax.text(0.7, 0.51, 'maximal', horizontalalignment='left', verticalalignment='bottom')
+
+n_evals = log_10[:,0] / 1e6
+ax.set_title('Maximum performance')
+ax.plot(n_evals, np.nanmean(max_fit_10, axis=1), label='10000', color=color_10k)
+ax.fill_between(n_evals, np.min(max_fit_10, axis=1), np.max(max_fit_10, axis=1), alpha=fill_alpha, facecolor=color_10k)
+
+n_evals = log_20[:,0] / 1e6
+ax.plot(n_evals, np.nanmean(max_fit_20, axis=1), label='20000', color=color_20k)
+ax.fill_between(n_evals, np.min(max_fit_20, axis=1), np.max(max_fit_20, axis=1), alpha=fill_alpha, facecolor=color_20k)
+
+n_evals = log_40[:,0] / 1e6
+ax.plot(n_evals, np.nanmean(max_fit_40, axis=1), label='40000', color=color_40k)
+ax.fill_between(n_evals, np.min(max_fit_40, axis=1), np.max(max_fit_40, axis=1), alpha=fill_alpha, facecolor=color_40k)
+
+n_evals = log_60[:,0] / 1e6
+ax.plot(n_evals, np.nanmean(max_fit_60, axis=1), label='60000', color=color_60k)
+ax.fill_between(n_evals, np.min(max_fit_60, axis=1), np.max(max_fit_60, axis=1), alpha=fill_alpha, facecolor=color_60k)
+
+plt.legend(custom_lines, labels, loc='lower right')
+
+fig.tight_layout(pad=0.1)
+plt.savefig("./maps_max.pdf")
+plt.show()
+
+
+# mean fitness plot
+fig, ax = plt.subplots()
+fig.set_size_inches(w=2.2, h=height)
+
+ax.grid(True, which='major', axis='y')
+ax.set_xlabel('Evaluations ($\\times10^6$)')
+ax.set_ylabel('Gait speed ($m/s$)')
+ax.set_xlim((0,40))
+ax.set_ylim((0,0.6))
+ax.axhline(0.5, color='gray', linestyle='-.', label='maximum')
+ax.text(0.7, 0.51, 'maximal', horizontalalignment='left', verticalalignment='bottom')
+
+n_evals = log_10[:,0] / 1e6
+ax.set_title('Mean performance')
+ax.plot(n_evals, np.nanmean(mean_fit_10, axis=1), label='10000', color=color_10k)
+ax.fill_between(n_evals, np.min(mean_fit_10, axis=1), np.max(mean_fit_10, axis=1), alpha=fill_alpha, facecolor=color_10k)
+
+n_evals = log_20[:,0] / 1e6
+ax.plot(n_evals, np.nanmean(mean_fit_20, axis=1), label='20000', color=color_20k)
+ax.fill_between(n_evals, np.min(mean_fit_20, axis=1), np.max(mean_fit_20, axis=1), alpha=fill_alpha, facecolor=color_20k)
+
+n_evals = log_40[:,0] / 1e6
+ax.plot(n_evals, np.nanmean(mean_fit_40, axis=1), label='40000', color=color_40k)
+ax.fill_between(n_evals, np.min(mean_fit_40, axis=1), np.max(mean_fit_40, axis=1), alpha=fill_alpha, facecolor=color_40k)
+
+n_evals = log_60[:,0] / 1e6
+ax.plot(n_evals, np.nanmean(mean_fit_60, axis=1), label='40000', color=color_60k)
+ax.fill_between(n_evals, np.min(mean_fit_60, axis=1), np.max(mean_fit_60, axis=1), alpha=fill_alpha, facecolor=color_60k)
+
+plt.legend(custom_lines, labels, loc='lower right')
+
+fig.tight_layout(pad=0.1)
+plt.savefig("./maps_avg.pdf")
+plt.show()
+
+
+# map coverage plot
+fig, ax = plt.subplots()
+fig.set_size_inches(w=2.2, h=height)
+
+ax.grid(True, which='major', axis='y')
+ax.set_xlabel('Evaluations ($\\times10^6$)')
+ax.set_ylabel('Coverage ($\%$)')
+ax.set_xlim((0,40))
+ax.set_ylim((0,100))
+
+ax.set_title('Coverage')
+n_evals = log_10[:,0] / 1e6
+ax.plot(n_evals, np.nanmean(niches_10, axis=1), label='10000', color=color_10k)
+ax.fill_between(n_evals, np.min(niches_10, axis=1), np.max(niches_10, axis=1), alpha=fill_alpha, facecolor=color_10k)
+
+n_evals = log_20[:,0] / 1e6
+ax.plot(n_evals, np.nanmean(niches_20, axis=1), label='20000', color=color_20k)
+ax.fill_between(n_evals, np.min(niches_20, axis=1), np.max(niches_20, axis=1), alpha=fill_alpha, facecolor=color_20k)
+
+n_evals = log_40[:,0] / 1e6
+ax.plot(n_evals, np.nanmean(niches_40, axis=1), label='40000', color=color_40k)
+ax.fill_between(n_evals, np.min(niches_40, axis=1), np.max(niches_40, axis=1), alpha=fill_alpha, facecolor=color_40k)
+
+n_evals = log_60[:,0] / 1e6
+ax.plot(n_evals, np.nanmean(niches_60, axis=1), label='40000', color=color_60k)
+ax.fill_between(n_evals, np.min(niches_60, axis=1), np.max(niches_60, axis=1), alpha=fill_alpha, facecolor=color_60k)
+
+plt.legend(custom_lines, labels, loc='lower right')
+
+fig.tight_layout(pad=0.1)
+plt.savefig("./maps_coverage.pdf")
+plt.show()

@@ -29,7 +29,7 @@ def test_gait(leg_params, body_height=0.14, velocity=0.3, duration=5.0, visualis
 	# summarise descriptor
 	descriptor = np.sum(contact_sequence, axis=1) / np.size(contact_sequence, axis=1)
 	# plot footfall diagram
-	# plot_footfall(contact_sequence)
+	plot_footfall(contact_sequence)
 
 	simulator.terminate()
 
@@ -41,7 +41,7 @@ def test_gait(leg_params, body_height=0.14, velocity=0.3, duration=5.0, visualis
 if __name__ == "__main__":
 	from hexapod.controllers.kinematic import tripod_gait, quadruped_gait, wave_gait
 
-	gait_map = np.loadtxt('./maps/niches_40000/map_7.dat')
+	gait_map = np.loadtxt('./maps/5k/map_1.dat')
 	row_index = np.argmax(gait_map, axis=0)[0]
 	# gait_map = gait_map[gait_map[:,0] > 2.0]
 	# row_index = np.random.randint(0, gait_map.shape[0])

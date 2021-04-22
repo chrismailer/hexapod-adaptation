@@ -4,8 +4,8 @@ from adapt.MBOA import MBOA
 import numpy as np
 
 # parameters
-map_count = 4
-niches = 10000
+map_count = 10
+niches = 10 #k
 failure_scenario = 4
 
 S0 = [[]]
@@ -49,12 +49,15 @@ for failure_index, failed_legs in enumerate(failures):
 			simulator.terminate()
 			return fitness
 
-		num_it, best_index, best_perf, new_map = MBOA(f"./maps/niches_{niches}/map_{map_num}.dat", f"./centroids/centroids_{niches}_6.dat", evaluate_gait, max_iter=40, print_output=False)
+		num_it, best_index, best_perf, new_map = MBOA(f"./maps/const_perf/{niches}k/map_{map_num}.dat", f"./centroids/centroids_{niches}000_6.dat", evaluate_gait, max_iter=40, print_output=False)
 
 		num_its[failure_index, map_num-1] = num_it
 		best_indexes[failure_index, map_num-1] = best_index
 		best_perfs[failure_index, map_num-1] = best_perf
 
 
-np.savetxt(f"./experiments/sim/{niches}_niches/trials_{failure_scenario}.dat", num_its, '%d')
-np.savetxt(f"./experiments/sim/{niches}_niches/perfs_{failure_scenario}.dat", best_perfs)
+# np.savetxt(f"./experiments/sim/{niches}k_half/trials_{failure_scenario}.dat", num_its, '%d')
+# np.savetxt(f"./experiments/sim/{niches}k_half/perfs_{failure_scenario}.dat", best_perfs)
+
+np.savetxt(f"./experiments/sim/const_perf/{niches}k/trials_{failure_scenario}.dat", num_its, '%d')
+np.savetxt(f"./experiments/sim/const_perf/{niches}k/perfs_{failure_scenario}.dat", best_perfs)
